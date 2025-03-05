@@ -41,24 +41,24 @@
  *
  *  GVariant Type Name/Code      C++ Type Name          QVariant Type Name
  *  --------------------------------------------------------------------------
- *  boolean            b         bool                   QVariant::Bool
- *  byte               y         char                   QVariant::Char
- *  int16              n         int                    QVariant::Int
- *  uint16             q         unsigned int           QVariant::UInt
- *  int32              i         int                    QVariant::Int
- *  uint32             u         unsigned int           QVariant::UInt
- *  int64              x         long long              QVariant::LongLong
- *  uint64             t         unsigned long long     QVariant::ULongLong
- *  double             d         double                 QVariant::Double
- *  string             s         QString                QVariant::String
- *  string array*      as        QStringList            QVariant::StringList
- *  byte array         ay        QByteArray             QVariant::ByteArray
- *  dictionary         a{ss}     QVariantMap            QVariant::Map
+ *  boolean            b         bool                   QMetaType::Bool
+ *  byte               y         char                   QMetaType::Char
+ *  int16              n         int                    QMetaType::Int
+ *  uint16             q         unsigned int           QMetaType::UInt
+ *  int32              i         int                    QMetaType::Int
+ *  uint32             u         unsigned int           QMetaType::UInt
+ *  int64              x         long long              QMetaType::LongLong
+ *  uint64             t         unsigned long long     QMetaType::ULongLong
+ *  double             d         double                 QMetaType::Double
+ *  string             s         QString                QMetaType::QString
+ *  string array*      as        QStringList            QMetaType::QStringList
+ *  byte array         ay        QByteArray             QMetaType::QByteArray
+ *  dictionary         a{ss}     QVariantMap            QMetaType::QVariantMap
  *
  * [*] not strictly an array, but called as such for sake of
  *     consistency with the 'a' appearing in the DBus type system
  *
- * We provide three functions here: the (one-way) mapping from GVariantType to QVariant::Type, plus two helpers
+ * We provide three functions here: the (one-way) mapping from GVariantType to QMetaType::Type, plus two helpers
  * for converting GVariant to and from native C++ types.  The signatures of these helpers are decided by the
  * fact that they always need to know the GVariant type information (as discussed above).
  *
@@ -67,52 +67,52 @@
  * in the cases that the type conversion function would have failed (ie: that could should be unreachable).
  */
 
-QVariant::Type qconf_types_convert(const GVariantType *gtype)
+QMetaType::Type qconf_types_convert(const GVariantType *gtype)
 {
     switch (g_variant_type_peek_string(gtype)[0]) {
     case G_VARIANT_CLASS_BOOLEAN:
-        return QVariant::Bool;
+        return QMetaType::Bool;
 
     case G_VARIANT_CLASS_BYTE:
-        return QVariant::Char;
+        return QMetaType::Char;
 
     case G_VARIANT_CLASS_INT16:
-        return QVariant::Int;
+        return QMetaType::Int;
 
     case G_VARIANT_CLASS_UINT16:
-        return QVariant::UInt;
+        return QMetaType::UInt;
 
     case G_VARIANT_CLASS_INT32:
-        return QVariant::Int;
+        return QMetaType::Int;
 
     case G_VARIANT_CLASS_UINT32:
-        return QVariant::UInt;
+        return QMetaType::UInt;
 
     case G_VARIANT_CLASS_INT64:
-        return QVariant::LongLong;
+        return QMetaType::LongLong;
 
     case G_VARIANT_CLASS_UINT64:
-        return QVariant::ULongLong;
+        return QMetaType::ULongLong;
 
     case G_VARIANT_CLASS_DOUBLE:
-        return QVariant::Double;
+        return QMetaType::Double;
 
     case G_VARIANT_CLASS_STRING:
-        return QVariant::String;
+        return QMetaType::QString;
 
     case G_VARIANT_CLASS_ARRAY:
         if (g_variant_type_equal(gtype, G_VARIANT_TYPE_STRING_ARRAY))
-            return QVariant::StringList;
+            return QMetaType::QStringList;
 
         else if (g_variant_type_equal(gtype, G_VARIANT_TYPE_BYTESTRING))
-            return QVariant::ByteArray;
+            return QMetaType::QByteArray;
 
         else if (g_variant_type_equal(gtype, G_VARIANT_TYPE ("a{ss}")))
-            return QVariant::Map;
+            return QMetaType::QVariantMap;
 
         // fall through
     default:
-        return QVariant::Invalid;
+        return QMetaType::UnknownType;
     }
 }
 
@@ -165,7 +165,7 @@ QVariant qconf_types_to_qvariant(GVariant *value)
         } else if (g_variant_is_of_type(value, G_VARIANT_TYPE("a{ss}"))) {
             GVariantIter iter;
             QMap<QString, QVariant> map;
-            const gchar *key; 
+            const gchar *key;
             const gchar *val;
 
             g_variant_iter_init (&iter, value);
@@ -206,7 +206,7 @@ GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVar
         return g_variant_new_int64(v.toLongLong());
 
     case G_VARIANT_CLASS_UINT64:
-        return g_variant_new_int64(v.toULongLong());
+        return g_variant_new_uint64(v.toULongLong());
 
     case G_VARIANT_CLASS_DOUBLE:
         return g_variant_new_double(v.toDouble());
@@ -230,7 +230,11 @@ GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVar
             gsize size = array.size();
             gpointer data;
 
+#if GLIB_CHECK_VERSION(2, 67, 3)
+            data = g_memdup2(array.data(), size);
+#else
             data = g_memdup(array.data(), size);
+#endif
 
             return g_variant_new_from_data(G_VARIANT_TYPE_BYTESTRING,
                                            data, size, TRUE, g_free, data);

@@ -5,7 +5,7 @@
 #export DH_VERBOSE=1
 
 # see FEATURE AREAS in dpkg-buildflags(1)
-export DEB_BUILD_MAINT_OPTIONS = hardening=+all
+export DEB_BUILD_MAINT_OPTIONS = hardening=+all optimize=+lto
 export DEB_LDFLAGS_MAINT_APPEND =
 export QT_SELECT := 5
 
@@ -17,27 +17,50 @@ testskip_architectures := powerpc armhf
 
 include /usr/share/dpkg/architecture.mk
 
+override_dh_auto_configure:
+	dh_auto_configure --builddirectory=build-qt6 --buildsystem=cmake -- \
+	    -DENABLE_QT6=ON \
+	    -DENABLE_WERROR=OFF \
+	    ..
+	dh_auto_configure --builddirectory=build-qt5 --buildsystem=cmake -- \
+	    -DENABLE_QT6=OFF \
+	    -DENABLE_WERROR=ON \
+	    ..
+
+override_dh_auto_build:
+	dh_auto_build --builddirectory=build-qt6 --buildsystem=cmake ..
+	dh_auto_build --builddirectory=build-qt5 --buildsystem=cmake ..
+
+override_dh_auto_test:
+ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(testskip_architectures)))
+	QT_QPA_PLATFORM=minimal LD_LIBRARY_PATH=../src GSETTINGS_BACKEND=memory GSETTINGS_SCHEMA_DIR=. xvfb-run -a dh_auto_test --builddirectory=build-qt6
+	QT_QPA_PLATFORM=minimal LD_LIBRARY_PATH=../src GSETTINGS_BACKEND=memory GSETTINGS_SCHEMA_DIR=. xvfb-run -a dh_auto_test --builddirectory=build-qt5
+endif
+
+override_dh_auto_install:
+	mkdir -p "$(CURDIR)/debian/run-dir/"
+	chmod 7700 "$(CURDIR)/debian/run-dir/"
+	export XDG_RUNTIME_DIR="$(CURDIR)/debian/run-dir/" && dh_auto_install --no-parallel \
+	                                                                      --builddirectory=build-qt6 \
+	                                                                      --buildsystem=cmake \
+	                                                                      ..
+	export XDG_RUNTIME_DIR="$(CURDIR)/debian/run-dir/" && dh_auto_install --no-parallel \
+	                                                                      --builddirectory=build-qt5 \
+	                                                                      --buildsystem=cmake \
+	                                                                      ..
+	rm -Rfv "$(CURDIR)/debian/run-dir/"
+
 override_dh_install:
 	rm -rf debian/*/usr/tests
 	dh_install
 
-override_dh_auto_install:
-	mkdir "$(CURDIR)/debian/run-dir/"
-	chmod 7700 "$(CURDIR)/debian/run-dir/"
-	export XDG_RUNTIME_DIR="$(CURDIR)/debian/run-dir/" && dh_auto_install --no-parallel
-	rm -Rfv "$(CURDIR)/debian/run-dir/"
+override_dh_auto_clean:
+	dh_auto_clean --builddirectory=build-qt6 --buildsystem=cmake ..
+	dh_auto_clean --builddirectory=build-qt5 --buildsystem=cmake ..
 
-override_dh_auto_test:
-ifneq ($(DEB_HOST_ARCH),$(findstring $(DEB_HOST_ARCH), $(testskip_architectures)))
-	QT_QPA_PLATFORM=minimal LD_LIBRARY_PATH=../src GSETTINGS_BACKEND=memory GSETTINGS_SCHEMA_DIR=. xvfb-run -a dh_auto_test
-endif
-
-override_dh_makeshlibs:
-	# passed to dpkg-gensymbols
-	dh_makeshlibs -- -c4
 
 %:
-	dh $@ --with pkgkde_symbolshelper
+	dh $@
 
 
 get-orig-source:

@@ -20,7 +20,7 @@
 #include <QVariant>
 #include <glib.h>
 
-QVariant::Type qconf_types_convert(const GVariantType *gtype);
+QMetaType::Type qconf_types_convert(const GVariantType *gtype);
 GVariant * qconf_types_collect(const GVariantType *gtype, const void *argument);
 GVariant *qconf_types_collect_from_variant(const GVariantType *gtype, const QVariant &v);
 void qconf_types_unpack(GVariant *value, void *argument);

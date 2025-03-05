@@ -140,12 +140,12 @@ void GSettingsQml::componentComplete()
     if (schemaValid) {
         priv->settings = new QGSettings(priv->schema->id(), priv->schema->path(), this);
 
-        connect(priv->settings, SIGNAL(changed(const QString &)), this, SLOT(settingChanged(const QString &)));
+        connect(priv->settings, &QGSettings::changed, this, &GSettingsQml::settingChanged);
 
         Q_FOREACH(const QString &key, priv->settings->keys())
             this->insert(key, priv->settings->get(key));
 
-        Q_EMIT(schemaChanged());
+        Q_EMIT schemaChanged();
     }
     // emit isValid notification only once everything is setup
     priv->schema->setIsValid(schemaValid);
@@ -156,7 +156,7 @@ void GSettingsQml::settingChanged(const QString &key)
     QVariant value = priv->settings->get(key);
     if (this->value(key) != value) {
         this->insert(key, value);
-        Q_EMIT(changed(key, value));
+        Q_EMIT changed(key, value);
     }
 }
 
@@ -171,7 +171,7 @@ QVariant GSettingsQml::updateValue(const QString& key, const QVariant &value)
         // object already has the new value set and doesn't emit its own
         // changed signal (see ::settingChanged). Emit it here so that it is
         // sent even when the setting is changed from qml.
-        Q_EMIT(changed(key, value));
+        Q_EMIT changed(key, value);
 
         return value;
     }
