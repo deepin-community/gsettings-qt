@@ -1,6 +1,6 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: gsettings-qt
-Source: https://gitlab.com/ubports/core/gsettings-qt
+Source: https://gitlab.com/ubports/development/core/gsettings-qt
 
 Files: *
 Copyright: 2013-2017 Canonical Ltd.

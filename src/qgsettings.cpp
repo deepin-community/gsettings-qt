@@ -53,7 +53,7 @@ QGSettings::QGSettings(const QByteArray &schema_id, const QByteArray &path, QObj
     else
         priv->settings = g_settings_new_with_path(priv->schema_id.constData(), priv->path.constData());
 
-    g_object_get (priv->settings, "settings-schema", &priv->schema, NULL);
+    g_object_get (priv->settings, "settings-schema", &priv->schema, nullptr);
     priv->signal_handler_id = g_signal_connect(priv->settings, "changed", G_CALLBACK(QGSettingsPrivate::settingChanged), this);
 }
 
@@ -105,7 +105,7 @@ bool QGSettings::trySet(const QString &key, const QVariant &value)
 QStringList QGSettings::keys() const
 {
     QStringList list;
-    gchar **keys = g_settings_list_keys(priv->settings);
+    gchar **keys = g_settings_schema_list_keys(priv->schema);
     for (int i = 0; keys[i]; i++)
         list.append(qtify_name(keys[i]));
 

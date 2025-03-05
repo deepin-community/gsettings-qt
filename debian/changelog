@@ -1,3 +1,67 @@
+gsettings-qt (1.0.0-2) unstable; urgency=medium
+
+  * debian/control:
+    + Add to D: (dev:pkgs): libgio-2.0-dev.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 02 Mar 2025 11:46:20 +0100
+
+gsettings-qt (1.0.0-1) unstable; urgency=medium
+
+  * New upstream release.
+  * debian/:
+    + Introduce Qt6 builds of gsettings-qt by dually building the gsettings-qt
+      code against Qt5 and Qt6. (Upstream switched from qmake to cmake, also
+      part of this changeset).
+  * debian/patches:
+    + Drop patches 0001, 0002 and 0003. All obsolete or accepted upstream
+      (upstream changed build system from qmake to cmake).
+    + Drop patch 0005. Applied upstream.
+    + Trivially rebase 0004_Increase-test-timeout.patch.
+  * debian/{control,*.install}:
+    + Rename qml-module-gsettings1.0 to qml-module-gsettings (and keep the
+      former as transitional package).
+  * debian/{control,rules,*.symbols}:
+    + Stop providing .symbols files.
+  * debian/control:
+    + Bump Standards-Version: to 4.7.0. No changes needed.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sat, 22 Feb 2025 14:59:32 +0100
+
+gsettings-qt (0.2-6) unstable; urgency=medium
+
+  [ Anton Gladky ]
+  * Add debian/.gitlab-ci.yml and rename to debian/salsa-ci.yml.
+
+  [ Debian Janitor ]
+  * Remove constraints unnecessary since buster (oldstable)
+  * Set upstream metadata fields: Bug-Database, Bug-Submit, Repository.
+
+  [ Mike Gabriel ]
+  * debian/rules: Drop empty line.
+  * debian/watch: Update file for recent GitLab changes of the tags
+    overview page.
+
+  [ Boyuan Yang ]
+  * Replace build-dep: pkg-config => pkgconf.
+  * d/rules: unconditionally enable LTO.
+  * d/libgsettings-qt1.symbols: Drop unnecessary disappeared Qt symbols
+    due to LTO being enabled. (Closes: #1015424)
+
+ -- Boyuan Yang <byang@debian.org>  Wed, 06 Nov 2024 09:46:04 -0500
+
+gsettings-qt (0.2-5) unstable; urgency=medium
+
+  [ Marius Gripsgard ]
+  * Remove keep canonical namespace patch
+
+  [ Mike Gabriel ]
+  * debian/:
+    + Update upstream Git repo URL.
+  * debian/control:
+    + Bump Standards-Version: to 4.6.2. No changes needed.
+
+ -- Mike Gabriel <sunweaver@debian.org>  Sun, 05 Feb 2023 14:52:55 +0100
+
 gsettings-qt (0.2-4) unstable; urgency=medium
 
   [ Boyuan Yang ]

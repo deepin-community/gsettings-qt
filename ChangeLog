@@ -1,0 +1,781 @@
+2025-02-22 Mike Gabriel
+
+        * Release 1.0.0 (HEAD -> main, tag: v1.0.0)
+
+2025-02-21 Ratchanan Srirattanamet
+
+        * Merge branch 'personal/mariogrip/qt6' into 'main' (aa243d6)
+
+2025-02-20 Mike Gabriel
+
+        * CMakeLists.txt: Rename WERROR to ENABLE_WERROR (for consistency
+          with other Lomiri projects). (37e46d0)
+        * debian/: Revert libgsettings-qt5{-1,-dev} back to
+          libgsettings-qt{1,-dev}. (d464cf1)
+        * CMake: Leave files of Qt5 variant of gsettings-qt un-QT-versioned,
+          only start using QT_VERSION_MAJOR in library name for Qt6
+          and above. (b748700)
+        * GSettings/CMakeLists.txt: Install QML files to ${URI}, not
+          ${URI}.${API_VER}. (9f9d506)
+
+2025-02-16 Mike Gabriel
+
+        * GSettings/CMakeLists.txt: No versioned QML plugin dir. (45708a3)
+
+2025-02-16 Cosima Neidahl
+
+        * GSettings/CMakeLists.txt: When building on Debian (& friends)
+          search for qmlplugin at a Qt-version specific location.
+          (c7c130a)
+
+2025-02-15 Mike Gabriel
+
+        * d/control: Add B-Ds (only required for Ubuntu noble, not for Debian
+          testing/unstable): qml6-module-qtqml-models and
+          qml6-module-qtqml-workerscript. (5753231)
+
+2025-02-14 Mike Gabriel
+
+        * debian/: Support dual build of gsettings-qt (Qt5 / Qt6). (7a232e1)
+        * d/control: Bump to Standards-Version: 4.7.0. No changes needed.
+          (3ae405c)
+        * d/: Bump to DH compat level version 13. (6b83eec)
+        * debian/libgsettings-qt1.symbols: Drop file. (84d0316)
+        * CMake: Improve Qt5/Qt6 namespacing. Allow installation of both
+          build variants. (000a142)
+
+2024-11-07 Marius Gripsgard
+
+        * buildsystem: Add support for qt6 (384551e)
+
+2025-02-14 Ratchanan Srirattanamet
+
+        * Merge branch 'personal/mariogrip/fix-depr' into 'main' (ec05c00)
+
+2024-11-07 Marius Gripsgard
+
+        * src: Use QMetaType::type instead of QVariant::type as its
+          deprecated. (ef5927f)
+        * cmake: Add option for werror and set wall, wextra and pendantic
+          (9013650)
+
+2025-02-13 Mike Gabriel
+
+        * Merge branch 'revert-9e7d4451' into 'main' (50bf4d6)
+        * Revert "Merge branch 'personal/mariogrip/fix-depr' into 'main'"
+          (16573c2)
+        * Merge branch 'personal/mariogrip/fix-depr' into 'main' (9e7d445)
+
+2024-11-07 Marius Gripsgard
+
+        * cmake: Add option for werror and set wall, wextra and pendantic
+          (f6be6ed)
+        * src: Use QMetaType::type instead of QVariant::type as its
+          deprecated. (e4d45fe)
+
+2025-02-13 Ratchanan Srirattanamet
+
+        * Merge branch 'personal/mariogrip/cmake' into 'main' (6dd7446)
+
+2025-02-13 Mike Gabriel
+
+        * src/CMakeLists.txt: Drop inclusion of CMakePackageConfigHelpers. No
+          functionality. (964dfe4)
+
+2025-02-12 Mike Gabriel
+
+        * GSettings/CMakeLists.txt: Actually add the .so file to the QML
+          plugin and also auto-generate the plugins.qmltypes file on
+          the file during build. (dfd9463)
+        * src/CMakeLists.txt: White-space beautification (indentation).
+          (b3cc2b0)
+        * CMake: Support settings a library SOVERSION independent from the
+          PROJECT_VERSION. (4f272a6)
+        * src/: Install include files (like many many other Qt projects do)
+          to a multi-arch path including the Qt version. (43cbe3b)
+        * debian/rules: Don't fail if debian/run-dir/ already exists.
+          (00b939b)
+
+2025-02-11 Mike Gabriel
+
+        * src/CMakeLists.txt: Merge two install targets with same destination
+          folder. (3023b20)
+
+2025-02-10 Mike Gabriel
+
+        * src/gsettings-qt.pc.in: Use @CMAKE_INSTALL_INCLUDEDIR@ for defining
+          includedir= key in .pc file. (9e4cd57)
+        * CMake: Unit tests require glib-2.0. Check for it only if testing is
+          enabled. (25ecf90)
+        * GSettings/CMakeLists.txt: Also set -DQT_NO_KEYWORDS definition for
+          QML plugin build. (0b881ab)
+
+2025-02-08 Mike Gabriel
+
+        * tests/CMakeLists.txt: Re-sort build steps to have things that
+          belong together written up together. Plus use an ordering
+          that alludes to how things depend on one another.
+          (12707f6)
+        * CMakeLists.txt: Bump cmake_minimum_required() to CMake 3.18 (needed
+          for REQUIRED flag in find_program()). (e1bd328)
+        * GSettings/CMakeLists.txt: Use add_qmlplugin() from cmake-extras
+          instead of hacking it together ourselves. (fb7fed6)
+        * src/CMakeLists.txt: Drop NO_KEYWORDS property from
+          set_target_properties(gsettings-qt ...). No known
+          functionality. (33e9449)
+        * Use IMPORTED_TARGET feature of PkgConfig CMake module for
+          finding/linking against Gio. (e0d0805)
+        * src/{CMakeLists.txt,gsettings-qt.pc.in}: Simplify setting library
+          path. (6e7bba0)
+        * tests/CMakeLists.txt: Check if program glib-compile-schemas is
+          available. (8e02c62)
+        * Move GNUInstallDirs to top-level CMakeLists.txt file. (963a109)
+
+2024-11-22 Marius Gripsgard
+
+        * Apply 2 suggestion(s) to 1 file(s) (a0027ef)
+
+2024-11-07 Marius Gripsgard
+
+        * debian: Adjust to use cmake (a774b61)
+        * buildsystem: Switch to cmake (3f2ab87)
+
+2025-02-11 Mike Gabriel
+
+        * Merge branch 'personal/peat-psuwit/update-jenkinsfile' into 'main'
+          (4164657)
+
+2025-02-11 Ratchanan Srirattanamet
+
+        * d/Jenkinsfile: update to use shared library (4856e38)
+
+2022-08-07 Marius Gripsgard
+
+        * hotfix: debian/control: Add transitional pkg (d5e002d)
+
+2022-08-03 Ratchanan Srirattanamet
+
+        * Merge branch 'personal/mariogrip/sync-debian' into 'main' (7cf8689)
+
+2022-08-03 Marius Gripsgard
+
+        * debian/control: Set Vcs to point to us (8d9908e)
+
+2022-08-01 Marius Gripsgard
+
+        * Merge branch 'personal/mariogrip/modernize' into 'main' (8203537)
+        * debian/: Start new development release (c209f79)
+        * debian/: sync with debian (c6da642)
+
+2022-01-12 Marius Gripsgard
+
+        * Use g_memdup2 for glib versions 2.67.3 and above (35c373a)
+        * Apply clazy fixes (09ce6f8)
+
+2022-08-01 Marius Gripsgard
+
+        * Move jenkinsfile to debian folder (7578856)
+        * Merge branch 'master' into 'master' (a510f4b)
+
+2022-01-10 sun.chengxiong
+
+        * fix up the bug: fail to  set uint64 value. (92158d8)
+
+2020-09-09 Marius Gripsgard
+
+        * Merge remote-tracking branch 'origin/xenial' (ce56e46)
+
+2020-06-24 Marius Gripsgard
+
+        * [tests] Add more test cases (e12a1df)
+        * Merge pull request #6 from z3ntu/xenial_-_deprecated (a291936)
+
+2020-05-17 Marius Gripsgard
+
+        * Merge pull request #7 from z3ntu/xenial_-_qt5.14 (aaef6ac)
+        * Merge pull request #8 from z3ntu/xenial_-_depends (4f3da18)
+        * Merge pull request #9 from z3ntu/xenial_-_musl-install (0e73377)
+        * Merge pull request #10 from z3ntu/xenial_-_sentinel (84f0267)
+
+2020-04-25 Luca Weiss
+
+        * Declare libgsettings-qt dependency for cpptest & gsettings-qt
+          (170e72e)
+        * Fix missing sentinel warning (150fa13)
+        * Fix 'make install' on Alpine Linux (6232cb0)
+        * Fix tests under Qt 5.14 (a38e6a1)
+        * Replace deprecated g_settings_list_keys usage (93794f0)
+
+2018-12-24 Marius Gripsgard
+
+        * Update control to correct source and maintainer (fa7454a) (tag:
+          v0.2)
+        * Rename canonical -> ubports (5c958bb)
+
+2018-05-18 Marius Gripsgard
+
+        * Trigger no change rebuild (c242fbc)
+
+2018-04-18 Marius Gripsgard
+
+        * Trigger new build, since jenkins sometimes is dumb sometimes
+          (c8ecb2b)
+
+2018-04-03 Marius Gripsgard
+
+        * remove bzr thingy (146b38b)
+
+2018-02-18 Marius Gripsgard
+
+        * Build for bionic (e7d75ed)
+
+2017-12-28 Marius Gripsgard
+
+        * Update Jenkinsfile (ecfdbaa)
+
+2017-10-26 Marius Gripsgard
+
+        * Imported to UBports (3b03880)
+
+2017-08-24 Bileto Bot
+
+        * Releasing 0.1+17.10.20170824-0ubuntu1 (d3dceec)
+
+2017-08-24 Dmitry Shachnev
+
+        * Update debian/libgsettings-qt1.symbols with the latest symbols
+          changes. (d865aad)
+        * Update debian/libgsettings-qt1.symbols with the latest symbols
+          changes. (0c8cee6)
+
+2017-01-10 Timo Jyrinki
+
+        * No change rebuild (e713b4d)
+
+2016-07-26 Timo Jyrinki
+
+        * Build against Qt 5.6.;  Adjust test running to changes in Qt 5.6.
+          * debian/control: don't use transitional package name.
+          Update symbols. (6bd8013)
+
+2016-03-29 CI Train Bot
+
+        * Releasing 0.1+16.04.20160329-0ubuntu1 (e86f566)
+
+2016-03-29 Albert Astals Cid
+
+        * Use QChar toUpper/toLower instead of C version (704be8b)
+
+2016-03-21 Albert Astals Cid
+
+        * Use also the qchar isUpper for completeness (08954c2)
+        * Use QChar toUpper/toLower instead of C version (76f5158)
+
+2016-01-11 CI Train Bot
+
+        * Releasing 0.1+16.04.20160111-0ubuntu1 (af33785)
+
+2016-01-11 Albert Astals Cid
+
+        * Disconnect signal handler on destruction (01d70e6)
+
+2015-11-30 CI Train Bot
+
+        * Releasing 0.1+16.04.20151130-0ubuntu1 (8454bfe)
+        * Rebuild against Qt 5.5.1. (19c6085)
+
+2015-11-30 Albert Astals Cid
+
+        * Disconnect signal handler on destruction (f6b75be)
+
+2015-11-04 CI Train Bot
+
+        * Releasing 0.1+16.04.20151104-0ubuntu1 (ac07f2d)
+
+2015-11-04 Lars Uebernickel
+
+        * qgsettings-qml: explicitly emit changed events (7b85bd5)
+        * qml tests: put changesSpy back (a355ae5)
+
+2015-10-29 Lars Uebernickel
+
+        * qgsettings-qml: explicitly emit changed events (0bbc9d5)
+
+2015-08-10 CI Train Bot
+
+        * Releasing 0.1+15.04.20150810-0ubuntu1 (f09bdaf)
+
+2015-08-10 Lukáš Tinkl
+
+        * Force handling deferred delete events to avoid memory leaks
+          Fixes:
+          #1460970 Approved by: Nick Dedekind, Lars Uebernickel
+          (188fc2a)
+
+2015-08-10 Gerry Boland
+
+        * Add changelog entry inserted into release branch (71e00ee)
+        * Add changelog entry inserted into release branch (71f4068)
+
+2015-07-28 Lukáš Tinkl
+
+        * fix building the Cpp test in CI (66ed83d)
+
+2015-06-15 Timo Jyrinki
+
+        * No-change rebuild against Qt 5.4.2. (3958560)
+
+2015-06-02 Lukáš Tinkl
+
+        * rename C++ test to cpptest (both target and the source) (233a5ec)
+        * add a C++ test for the deferred deletion case (2d1cda3)
+        * resort to forcing a queued connection on the changed() signal
+          (3f2adc6)
+        * clarify comment, link to BRs (305a245)
+
+2015-06-01 Lukáš Tinkl
+
+        * fixup tests (27b50f3)
+        * use QCoreApplication::sendPostedEvents() to sync to glib event loop
+          (af168bd)
+
+2015-05-21 Lukáš Tinkl
+
+        * process the changed signals in a queued connection (d57b1cf)
+
+2015-03-18 Timo Jyrinki
+
+        * No-change rebuild against Qt 5.4.1. (be6dc2a)
+
+2015-02-16 Timo Jyrinki
+
+        * No-change rebuild against Qt 5.4.0. (9e8cce9)
+
+2014-11-12 Timo Jyrinki
+
+        * No-change rebuild against Qt 5.3.2. (c5e67aa)
+
+2014-08-07 CI bot
+
+        * Releasing 0.1+14.10.20140807-0ubuntu1 (612c95c)
+
+2014-08-07 Ken VanDine
+
+        * qtdeclarative5-gsettings1.0 needs to depend on the same version of
+          libgsettings-qt1 (94572c2)
+        * qtdeclarative5-gsettings1.0 needs to depend on the same version of
+          libgsettings-qt1 (042a291)
+
+2014-08-01 CI bot
+
+        * Releasing 0.1+14.10.20140801.1-0ubuntu1 (4e00dbe)
+        * Replaced 0replaceme with real versions. (703c1e5)
+
+2014-08-01 Ken VanDine
+
+        * added tests for a{ss} (ad46754)
+
+2014-08-01 Łukasz 'sil2100' Zemczak
+
+        * Work-around a symbols problem in ppc64el (7c4f2cc)
+
+2014-08-01 Lars Uebernickel
+
+        * qconftypes: support a{ss} (56f679f)
+
+2014-08-01 Łukasz 'sil2100' Zemczak
+
+        * Work-around a symbols problem in ppc64el (04414a2)
+
+2014-08-01 Ken VanDine
+
+        * added tests for a{ss} (f26f934)
+
+2014-07-30 Lars Uebernickel
+
+        * symbols: make detach_helper_grow optional (51b56d4)
+        * Remove symbols from libgsettings-qt1.symbols (6b77487)
+        * qconftypes: support a{ss} (4e5e19e)
+        * qconftypes: remove unused functions (69139cc)
+
+2014-06-25 Lars Uebernickel
+
+        * Add manual test cases (f649871)
+        * examples/choices.qml: use a key from unity8 and allow changing that
+          key (1ef075b)
+
+2014-06-24 CI bot
+
+        * Releasing 0.1+14.10.20140624-0ubuntu1 (2b70d7e)
+
+2014-06-24 Lars Uebernickel
+
+        * qml: only emit changed when the value has actually changed
+          (099a531)
+        * Stop using deprecated g_settings_get_range() (7ad1cf7)
+
+2014-06-23 Lars Uebernickel
+
+        * qml: only emit changed when the value has actually changed
+          (8f6fda8)
+        * Stop using deprecated g_settings_get_range() (7915bac)
+
+2014-06-07 CI bot
+
+        * Releasing 0.1+14.10.20140607-0ubuntu1 (25245c3)
+        * No change rebuild against Qt 5.3 (53330bd)
+
+2014-06-06 CI bot
+
+        * Releasing 0.1+14.10.20140606-0ubuntu1 (556aefe)
+
+2014-06-06 Lars Uebernickel
+
+        * Sync settings in destructor (fb24fcb)
+
+2014-06-03 Lars Uebernickel
+
+        * g_setting_sync() doesn't take arguments (f0b27b6)
+        * Sync settings in QGSettings destructor (8123b85)
+
+2014-05-20 CI bot
+
+        * Releasing 0.1+14.10.20140520-0ubuntu1 (4c16077)
+
+2014-05-20 Iain Lane
+
+        * Add a symbols file so that the qtdeclarative module (and other
+          rdeps) get correctly versioned dependencies
+          Fixes: 1304611
+          (c145715)
+
+2014-05-02 Iain Lane
+
+        * Merge trunk (47c04f0)
+
+2014-05-01 CI bot
+
+        * Releasing 0.1+14.10.20140501-0ubuntu1 (6b13ef8)
+
+2014-05-01 Michal Hruby
+
+        * Fix incorrect unref call. (7b03b3a)
+        * Fix unref call (a8f5c0c)
+
+2014-04-10 Iain Lane
+
+        * Add a symbols file (9fe1266)
+
+2014-04-08 CI bot
+
+        * Releasing 0.1+14.04.20140408-0ubuntu1 (ff78537)
+        * Added API to check if a schema is installed.
+          Fixes: 1209235
+          (61279eb)
+
+2014-04-08 Michal Hruby
+
+        * Added API to check if a schema is installed.
+          Fixes:
+          https://bugs.launchpad.net/bugs/1209235. (d953f7b)
+        * Bump version (0ae6f47)
+        * Added isValid property which is false if schema is not installed
+          (ca57d3f)
+
+2014-03-17 Timo Jyrinki
+
+        * Rebuild against Qt 5.2.1 (b5b08ae)
+
+2014-01-10 Michael Terry
+
+        * The Qt plugin needs ${misc:Pre-Depends} and the dev package does
+          not need ${shlibs:Depends}. (4682ca6)
+        * Fix shlib variables (99ae75f)
+
+2014-01-09 Albert Astals
+
+        * No need for X in this text (LP: #1259145).
+          Fixes:
+          https://bugs.launchpad.net/bugs/1259145. (8097575)
+        * No need for X in this text (15b10a3)
+
+2013-09-02 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130902.1-0ubuntu1 (revision 41 from
+          lp:gsettings-qt). (969b8f3)
+        * Releasing 0.0+13.10.20130902.1-0ubuntu1, based on r41 (38e44b5)
+
+2013-08-30 Lars Uebernickel
+
+        * Don't write values into the QQmlPropertyMap when the write failed
+          (26b8c15)
+        * Don't write values into the QQmlPropertyMap when the write failed
+          (29029a5)
+
+2013-08-29 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130829-0ubuntu1 (revision 39 from
+          lp:gsettings-qt). (4d9f3d8)
+        * Releasing 0.0+13.10.20130829-0ubuntu1, based on r39 (e5339d8)
+
+2013-08-29 Lars Uebernickel
+
+        * Add API to reset a key to its default value.
+          Fixes:
+          https://bugs.launchpad.net/bugs/1218005. (579b713)
+        * tests: load GSettings plugin as directory import (533f3f2)
+
+2013-08-28 Lars Uebernickel
+
+        * Add API to reset a key to its default value (2ccc27f)
+
+2013-08-07 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130807-0ubuntu1 (revision 37 from
+          lp:gsettings-qt). (ab73c3f)
+        * Releasing 0.0+13.10.20130807-0ubuntu1, based on r37 (d958083)
+
+2013-08-06 Lars Uebernickel
+
+        * Fix crash in unqtify_name (7938d20)
+
+2013-08-06 Ken VanDine
+
+        * Install QML module in a versioned dir so it is really parallel
+          installable . (edac9a4)
+        * Install QML module in a versioned dir so it is really parallel
+          installable (102dd9c)
+
+2013-08-06 Lars Uebernickel
+
+        * Fix crash in unqtify_name (0339dd3)
+
+2013-08-02 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130802-0ubuntu1 (revision 34 from
+          lp:gsettings-qt). (a5d7428)
+        * Releasing 0.0+13.10.20130802-0ubuntu1, based on r34 (afedd1c)
+
+2013-08-02 Sebastien Bacher
+
+        * let the dev binary depends on the library. (e766fee)
+        * let the dev binary depends on the library (46b274f)
+
+2013-07-30 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130730.1-0ubuntu1 (revision 32 from
+          lp:gsettings-qt). (acde6bd)
+        * Releasing 0.0+13.10.20130730.1-0ubuntu1, based on r32 (984c538)
+
+2013-07-30 Sebastien Bacher
+
+        * build a .qmltypes, so qtcreator knows about GSettings. (4de18bd)
+        * build a .qmltypes, so qtcreator knows about GSettings (578aa0b)
+
+2013-07-30 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130730-0ubuntu1 (revision 30 from
+          lp:gsettings-qt). (21c61f2)
+        * Releasing 0.0+13.10.20130730-0ubuntu1, based on r30 (3ceb7bd)
+
+2013-07-29 Lars Uebernickel
+
+        * Fix regression: GSettingsQml didn't update values on change.
+          Fixes:
+          https://bugs.launchpad.net/bugs/1206181. (85ebd80)
+        * Fix regression: GSettingsQml didn't update values on change
+          (67a0a45)
+
+2013-07-25 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130725-0ubuntu1 (revision 28 from
+          lp:gsettings-qt). (7bf1534)
+        * Releasing 0.0+13.10.20130725-0ubuntu1, based on r28 (02d4149)
+
+2013-07-23 Lars Uebernickel
+
+        * Add a library that can be used from qt/c++ and make gsettings-qml
+          use that. (ffdd0dd)
+        * qgsettingsqml::choices: switch conditions to more logical order
+          (92faf76)
+        * qgsettings: whitespace (163a7b1)
+
+2013-07-20 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130720-0ubuntu1 (revision 26 from
+          lp:gsettings-qt). (59751c4)
+        * Releasing 0.0+13.10.20130720-0ubuntu1, based on r26 (40fece8)
+
+2013-07-19 Lars Uebernickel
+
+        * qgsettings: add documentation (a12a8e8)
+
+2013-07-19 Sebastien Bacher
+
+        * debian: put c++ lib into its own packages (53e63a3)
+
+2013-07-19 Lars Uebernickel
+
+        * Generate a pkgconfig file for the c++ library (6c48777)
+        * Install headers into $prefix/include/QGSettings (a185607)
+        * Add libgsettings-qt, a qt/c++ library to access gsettings (dbbdaea)
+        * Clean up tests and add some more testing. (f98771b)
+        * Fix bug: assigning an empty array to a key of type "as" didn't work
+          (6538fe5)
+        * Test changed signal more exhaustively (8e4f694)
+        * Don't abort when calling schema.choices() for an unknown key.
+          (fcf51b6)
+        * Separate test for reading defaults from writing values (d1d0e94)
+        * Don't abort when calling schema.choices with an unknown key
+          (b3a8309)
+
+2013-07-17 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130717-0ubuntu1 (revision 23 from
+          lp:gsettings-qt). (a263f1b)
+        * Releasing 0.0+13.10.20130717-0ubuntu1, based on r23 (1ada285)
+
+2013-07-17 Lars Uebernickel
+
+        * Add GSettings.schema.choices (5e613d5)
+
+2013-07-16 Lars Uebernickel
+
+        * Add example: using schema.choices with a qml ListView (b369dde)
+        * add test for schema.choices (feefa14)
+        * schema.choices: convert from qt-style key names to real names
+          (c51bc43)
+        * Merge trunk (2b4ded7)
+        * Add GSettings.schema.choices (e4ad97c)
+        * Add grouped property "schema" (f4e88fb)
+        * GSettingsQml: adhere to Qt's constructor-takes-parent-pointer
+          convention (ae78698)
+
+2013-07-16 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130716-0ubuntu1 (revision 21 from
+          lp:gsettings-qt). (98d8fae)
+        * Releasing 0.0+13.10.20130716-0ubuntu1, based on r21 (0cb6fcb)
+
+2013-07-15 Iain Lane
+
+        * Add a testcase for the onChanged signal. (c09ab81)
+
+2013-07-13 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130713-0ubuntu1 (revision 19 from
+          lp:gsettings-qt). (3315dc6)
+        * Releasing 0.0+13.10.20130713-0ubuntu1, based on r19 (ce18274)
+
+2013-07-12 Iain Lane
+
+        * Remove qDebug() calls left in by mistake (79de2b7)
+
+2013-07-12 Lars Uebernickel
+
+        * Add 'changed' signal (1326108)
+
+2013-07-12 Iain Lane
+
+        * Remove unnecessary import (2669764)
+        * Add a testcase for the onChanged signal (523e701)
+        * Add test qml file to OTHER_FILES so it appears in Qt Creator
+          (7c18d03)
+
+2013-07-12 Lars Uebernickel
+
+        * Add 'changed' signal (f34ffa4)
+
+2013-07-01 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130701-0ubuntu1 to ubuntu. (00e6aad)
+        * Releasing 0.0+13.10.20130701-0ubuntu1, based on r17 (817df42)
+
+2013-06-30 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130630-0ubuntu1 to ubuntu. (4b80a47)
+        * Releasing 0.0+13.10.20130630-0ubuntu1, based on r16 (0300fd3)
+
+2013-06-29 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130629-0ubuntu1 to ubuntu. (0f3713d)
+        * Releasing 0.0+13.10.20130629-0ubuntu1, based on r15 (315a8d8)
+        * Releasing 0.0+13.10.20130628.1-0ubuntu1 to ubuntu. (39bf2ae)
+
+2013-06-28 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130628.1-0ubuntu1, based on r14 (096b528)
+        * Releasing 0.0+13.10.20130628-0ubuntu1 to ubuntu. (f13e0d9)
+        * Releasing 0.0+13.10.20130628-0ubuntu1, based on r13 (e54d098)
+
+2013-06-27 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130627-0ubuntu1 to ubuntu. (db85800)
+        * Releasing 0.0+13.10.20130627-0ubuntu1, based on r12 (01b843f)
+        * Releasing 0.0+13.10.20130626.1-0ubuntu1 to ubuntu. (7cf5ea5)
+
+2013-06-26 Automatic PS uploader
+
+        * Releasing 0.0+13.10.20130626.1-0ubuntu1, based on r11 (0509497)
+
+2013-06-26 Ken VanDine
+
+        * build depend on qtdeclarative5-test-plugin . (7dba4df)
+        * build depend on qtdeclarative5-test-plugin (b47d6df)
+
+2013-06-25 Lars Uebernickel
+
+        * Don't install tests (d277c70)
+
+2013-06-25 Ken VanDine
+
+        * don't install the tests with the package (3a414df)
+
+2013-06-25 Lars Uebernickel
+
+        * debian: run xvfb with -a (f86c37e)
+        * Merge trunk (5310f7e)
+        * Update config to build as plugin (080f50e)
+        * debian: run `make check` under xvfb-run (c0fbc86)
+
+2013-06-24 Ken VanDine
+
+        * Updated config to build plugin (d0f8127)
+
+2013-06-22 Lars Uebernickel
+
+        * Remove QtGui dependency (4c44354)
+        * Add basic testing (96ef8e3)
+
+2013-06-21 Lars Uebernickel
+
+        * Merge more packaging fixes from
+          lp:~ken-vandine/gsettings-qt/packaging (9652804)
+
+2013-06-21 Ken VanDine
+
+        * releasing version 0.0-0ubuntu1 (687e3e2)
+        * arch any (5ee8011)
+        * fixed headers and added COPYING file (ad14726)
+
+2013-06-21 Lars Uebernickel
+
+        * Merge lp:~ken-vandine/gsettings-qt/packaging (e6cc78b)
+
+2013-06-21 Ken VanDine
+
+        * fixed ubuntu revision (a5bf66e)
+        * Updated team in Vcs (fe43212)
+
+2013-06-20 Lars Uebernickel
+
+        * Merge initial packaging (aa39917)
+
+2013-06-20 Ken VanDine
+
+        * fixed up the Vcs comments (efe6f48)
+        * added packaging and some install stuff (d44ef99)
+
+2013-06-20 Lars Uebernickel
+
+        * gsettings-qt: gsettings bindings for qml (a2699b4)

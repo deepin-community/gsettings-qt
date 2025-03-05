@@ -1,6 +1,1 @@
-0001_Fix-link-path-error.patch
-0002_Add-ordered-config.patch
-0003_Fix-make-check-failed.patch
 0004_Increase-test-timeout.patch
-0005_bugfix-about-test-cases.patch
-2001_keep-com.canonical-DBus-namespace.patch
