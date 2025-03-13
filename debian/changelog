@@ -1,3 +1,9 @@
+gsettings-qt (1.0.0-2deepin1) unstable; urgency=medium
+
+  * update depends.
+
+ -- lichenggang <lichenggang@deepin.org>  Thu, 13 Mar 2025 15:36:44 +0800
+
 gsettings-qt (1.0.0-2) unstable; urgency=medium
 
   * debian/control:
