@@ -38,7 +38,6 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libgio-2.0-dev,
  libgsettings-qt6-1 (= ${binary:Version}),
  ${misc:Depends},
 Description: library to access GSettings from Qt6 (development files)
@@ -54,7 +53,6 @@ Section: libdevel
 Architecture: any
 Multi-Arch: same
 Depends:
- libgio-2.0-dev,
  libgsettings-qt1 (= ${binary:Version}),
  ${misc:Depends},
 Description: library to access GSettings from Qt5 (development files)
